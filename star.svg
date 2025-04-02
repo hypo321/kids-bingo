@@ -1,0 +1,17 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- A pink five-pointed star with 10 vertices (outer + inner points). -->
+  <polygon fill="#FF0066"
+           points="
+             100,20
+             123.6,67.6
+             176.1,75.3
+             138.0,112.4
+             147.1,164.7
+             100,140
+             52.9,164.7
+             61.9,112.4
+             23.9,75.3
+             76.5,67.6">
+
+  </polygon>
+</svg>
