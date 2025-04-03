@@ -216,24 +216,6 @@
             transition: background-color 0.5s ease-in-out;
     }
 
-    .checked::before,
-    .checked::after {
-      /* Sparkles in checked cells */
-      content: "✨";
-      position: absolute;
-      font-size: 1.5rem;
-    }
-
-    .checked::before {
-      top: 10%;
-      left: 10%;
-    }
-
-    .checked::after {
-      bottom: 10%;
-      right: 10%;
-    }
-
     /* Completed state for center cell (when all outer are checked) */
     .center.complete {
       background: #00bf63;
