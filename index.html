@@ -372,6 +372,7 @@
       background: #00bf63;
       color: #fff;
       font-size: 2rem;
+      line-height:normal;
       width: 40px;
       height: 40px;
       border-radius: 50%;
@@ -382,6 +383,15 @@
       box-shadow: 0 2px 4px rgba(0,0,0,0.3);
       z-index: 999;
     }
+
+    /* For wide but short screens, rearrange layout */
+@media screen and (min-width: 800px) and (max-height: 450px) {
+
+  body {
+    font-size: 0.8rem;
+  }
+
+}
 
   </style>
 </head>
