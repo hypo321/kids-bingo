@@ -46,13 +46,18 @@
       /* prevent any scrolling */
     }
 
+
+
     body {
 
    font-size: clamp(0.8rem,calc(1vw + 1vh),1.5rem); /* You can adjust this value according to your preference */
 
 }
 
-
+.emoji {
+   font-size: clamp(1rem,calc(1.5vw + 1.5vh),2.5rem);
+  /* Adjust the size of the emoji */
+}
 
 
 /*
@@ -100,7 +105,7 @@
       width: clamp(300px, calc(20vw + 20vh), 600px);
 
       height: auto;
-      margin: 10px auto;
+      margin:  auto;
       /* center horizontally, small vertical margins */
     }
 
@@ -152,7 +157,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-
+      flex-direction: column;
 
       font-weight: bold;
       color: #261750;
@@ -416,8 +421,13 @@
   body {
     font-size: 0.8rem;
   }
+  .emoji {
+    font-size: 2rem;
+  }
 
 }
+
+
 
   </style>
 </head>
@@ -440,17 +450,18 @@
       <div id="boardContainer">
           <img src="chick.png" id="chick" alt="Chick" />
     <!-- 9 Bingo cells: 8 clickable outer cells and 1 center star cell -->
-    <div id="cell0" class="cell tl">Tidy up your toys 🧸</div>
-    <div id="cell1" class="cell">Organise your craft and art supplies 🎨</div>
-    <div id="cell2" class="cell tr">Organise your bookshelf 📚</div>
-    <div id="cell3" class="cell">Help organise the kitchen with a grown-up 🍽️</div>
+    <div id="cell0" class="cell tl"><div class="emoji">🧸</div><div>Tidy up your toys</div></div>
+    <div id="cell1" class="cell"><div class="emoji">🎨</div><div>Organise your craft and art supplies</div></div>
+    <div id="cell2" class="cell tr"><div class="emoji">📚</div><div>Organise your bookshelf</div></div>
+    <div id="cell3" class="cell"><div class="emoji">🍽️</div>
+    <div>Help organise the kitchen with a grown-up</div></div>
     <div id="cell4" class="cell center">
         <img src="star.svg" class="star" alt="Star" />
     </div>
-    <div id="cell5" class="cell">Find matching pairs for your socks 🧦</div>
-    <div id="cell6" class="cell bl">Show off your dusting skills✨</div>
-    <div id="cell7" class="cell">Tidy up your wardrobe 👕</div>
-    <div id="cell8" class="cell br">Choose one toy or book to give away 🎁</div>
+    <div id="cell5" class="cell"><div class="emoji">🧦</div><div>Find matching pairs for your socks</div></div>
+    <div id="cell6" class="cell bl"><div class="emoji">✨</div><div>Show off your dusting skills</div></div>
+    <div id="cell7" class="cell"><div class="emoji">👕</div><div>Tidy up your wardrobe</div></div>
+    <div id="cell8" class="cell br"><div class="emoji">🎁</div><div>Choose one toy or book to give away</div></div>
     </div>
 
 
