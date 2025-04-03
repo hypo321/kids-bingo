@@ -95,6 +95,7 @@
 
     /* Title banner at top, centered */
     #title {
+            grid-area: header;
       display: block;
       width: clamp(300px, calc(20vw + 20vh), 600px);
 
@@ -105,6 +106,7 @@
 
     /* Container for the bingo grid (the "board") */
     #boardContainer {
+      grid-area:board;
       position: relative;
       /* 3x3 grid layout */
       display: grid;
@@ -245,9 +247,9 @@
     #chick {
       position: absolute;
       bottom: 0%;
-      right: -15.5%;
+      right: -95px;
 
-      width: 13vmin;
+      width: 120px;
       /* offset to make it peek out */
       max-width: 120px;
       pointer-events: none;
@@ -266,12 +268,6 @@
   #chick {
     display: none;
   }
-  #logo {
-    display: none;
-  }
-  #title {
-    display: none;
-  }
 
       }
 
@@ -279,22 +275,69 @@
     /* Olio logo at bottom-center */
     #logo {
 
+      /* centre in the grid cell */
+
+
       width: clamp(100px, calc(5vw + 10vh), 200px);
       height: auto;
       pointer-events: none;
-      margin: 2rem;
+      margin: auto;
 
+    }
+
+    /* Footer styling */
+    #footer {
+            grid-area: footer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* centre in the grid cell */
+      width: 100%;
+      height: 100%;
+      margin: 0 auto;
+      /* center horizontally within body */
     }
 
     /* main column flex 1 column, 3 rows */
     .mainColumn {
-      display: flex;
-      flex-direction: column;
-      justify-content:space-around;
-      align-items: center;
+
+      display: grid;
+      grid-template-areas:
+        "header"
+        "board"
+        "footer";
+      grid-template-rows: auto auto auto;
+
+      gap: 1rem;
+      justify-content:center;
+      align-items:center;
+      /* center the title and logo */
+      width: 100%;
       height: 100%;
       /* enough space for the title and logo top and  bottom, and maximise the middle row for the grid. */
     }
+
+    /* But in cases where screen is short but wide, I want the frist and third elements to be in a second column to the right of the grid */
+    @media  (max-height: 950px) and (min-width: 650px) {
+      .mainColumn {
+             grid-template-columns: auto auto;
+        grid-template-rows: auto auto;
+        grid-template-areas:
+          "board header"
+          "board footer";
+      /* center the title and logo */
+
+      /* enough space for the title and logo top and  bottom, and maximise the middle row for the grid. */
+      }
+
+      #title {
+        margin: 0;
+      }
+      #logo {
+        margin: 0;
+      }
+    }
+
      /* Ensure the canvas covers the entire viewport as an overlay */
   #confettiCanvas {
     position: fixed;
@@ -367,7 +410,7 @@
     }
 
     /* For wide but short screens, rearrange layout */
-@media screen and (min-width: 800px) and (max-height: 450px) {
+@media screen and (min-width: 800px) and (max-height: 600px) {
 
   body {
     font-size: 0.8rem;
@@ -411,7 +454,9 @@
 
 
   <!-- Olio logo at the bottom -->
+   <div id="footer">
   <img src="olio_purple.png" id="logo" alt="Olio Logo" />
+  </div>
 </div>
   <!-- Modal for instructions -->
   <div id="modal" class="modal">
