@@ -76,24 +76,18 @@
 
     /* Title banner styling */
     .title {
-      margin: 5px auto;
+
+      display: flex;
+      margin:  auto;
+      width: 70%;
     }
 
-
-
-    .title span.purpleText {
-      color: #261750;
-    }
-
-    .title span.pinkText {
-      color: #ff4c70;
-    }
 
     .title img {
       width: 100%;
       max-width: 400px;
 
-      margin: 0;
+      margin: auto;
       padding: 0;
     }
 
@@ -115,7 +109,7 @@
       --h: calc(calc(100vh / 5) + calc(4 * 4));
       width: min(var(--w), var(--h));
       height: min(var(--w), var(--h));
-      min-width: 300px;
+      min-width: 250px;
     }
 
     /* Cell styling */
@@ -223,7 +217,7 @@
 
 
 
-    @media (max-height: 900px) and (min-width: 650px) {
+    @media (max-height: 900px) and (min-width: 800px) {
       .mainColumn {
         grid-template-columns: 60% 1fr;
         width: auto;
