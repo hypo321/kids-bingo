@@ -459,8 +459,7 @@
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    const sprayAudio = new Audio('spray.m4a');
-     const spongeAudio = new Audio('wipe.m4a');
+
     // Confetti animation functions
     const confettiCount = 150;
     let confetti = [];
@@ -631,11 +630,7 @@
         duration: 2000,
         easing: 'linear'
       });
-      // play the spray audio after 500ms delay
-      setTimeout(() => {
-        spongeAudio.currentTime = 0;
-        spongeAudio.play();
-      }, 0);
+
       // Once the animation is finished, remove the element and call the callback.
       animation.onfinish = () => {
         console.log('Sponge animation complete');
@@ -714,11 +709,7 @@
         { phase: 1, duration: 200 }
       ];
       let cumulativeDelay = 0;
-      // play the spray audio after 500ms delay
-      setTimeout(() => {
-        sprayAudio.currentTime = 0;
-        sprayAudio.play();
-      }, 500);
+
       ANIMATION_SEQUENCE.forEach(({ phase, duration }) => {
         setTimeout(() => {
           currentPhase = phase;
