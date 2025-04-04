@@ -522,10 +522,14 @@
     function updateCenterCompletion() {
       const allChecked = cellChecked.every((checked) => checked);
       if (allChecked) {
-        centerCell.classList.add('complete');
-        startConfetti();
+        setTimeout(() => {
+          startConfetti();
+            const shareButton = document.getElementById('shareButton');
+            shareButton.click();
+        }, 3000);
+
       } else {
-        centerCell.classList.remove('complete');
+
         stopConfetti();
       }
     }
