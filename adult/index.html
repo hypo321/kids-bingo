@@ -722,6 +722,9 @@
     // Add click event listeners to cells and integrate both animations.
     cells.forEach((cell, index) => {
       cell.addEventListener('click', () => {
+        if (cell.dataset.animating === 'true') return; // Ignore clicks if animating
+        cell.dataset.animating = 'true';
+
         const currentlyChecked = cellChecked[index];
         cellChecked[index] = !currentlyChecked;
         if (cellChecked[index]) {
@@ -736,11 +739,12 @@
                       cell.classList.add('checked');
             }, 800);
             triggerSpongeAnimation(centerX, centerY, () => {
-              // Optional: additional code after sponge animation completes.
+              cell.dataset.animating = 'false';
             });
           });
         } else {
           cell.classList.remove('checked');
+              cell.dataset.animating = 'false';
         }
         localStorage.setItem('springBingoState', JSON.stringify(cellChecked));
         updateCenterCompletion();
