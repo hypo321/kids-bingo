@@ -58,6 +58,10 @@
       font-size: clamp(0.6rem, min(var(--w), var(--h)), 2rem);
     }
 
+    img {
+      pointer-events: none
+    }
+
     /* Title banner styling */
     .title {
       grid-area: header;
@@ -66,7 +70,7 @@
       align-items: center;
       width: 100%;
       height: 100%;
-      border: red 1px solid;
+
       gap: 0.5rem;
       font-size: 4rem;
     }
@@ -90,6 +94,9 @@
     .title img {
       width: 100%;
       max-width: 400px;
+
+      margin: 0;
+      padding: 0;
     }
 
     /* Board container styling */
@@ -153,7 +160,6 @@
       height: auto;
       pointer-events: none;
       margin: auto;
-      bottom: 0px;
     }
 
     #footer {
@@ -174,7 +180,7 @@
         "board"
         "footer";
       grid-template-rows: 10% 1fr auto;
-      gap: 1rem;
+
       justify-content: center;
       align-items: center;
       width: 100%;
@@ -191,11 +197,12 @@
       .mainColumn {
         grid-template-columns: 60% 1fr;
         width: auto;
-        grid-template-rows: 60% 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
         grid-template-areas:
           "board header"
+          "board buttons"
           "board footer";
-        gap: 4rem;
+        gap: 2rem;
       }
     }
 
@@ -275,6 +282,31 @@
         font-size: 0.8rem;
       }
     }
+
+    #footerContainer button {
+      margin: 0 15px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      border: none;
+      background: #ff4c70;
+      color: #fff;
+      border-radius: 4px;
+    }
+
+/* Default (1 column) layout: buttons on either side of the logo */
+#footerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-area: footer;
+  gap: 20px;
+  padding: 20px;
+}
+
+
+
+
   </style>
 </head>
 
@@ -303,8 +335,31 @@
       <div id="cell14" class="cell orange">List unused and unwanted toiletries</div>
       <div id="cell15" class="cell pink">Organise your storage boxes</div>
     </div>
-    <div id="footer">
+    <!-- New footer container for buttons and logo -->
+    <div id="footerContainer">
+      <button id="resetButton">Reset</button>
       <img src="olio_purple.png" id="logo" alt="Olio Logo" />
+      <button id="shareButton">Share</button>
+    </div>
+
+    <!-- Reset confirmation modal -->
+    <div id="resetModal" class="modal">
+      <div class="modal-content">
+        <h2>Confirm Reset</h2>
+        <p>Are you sure you want to reset the board?</p>
+        <button id="confirmReset">Yes, Reset</button>
+        <button id="cancelReset">Cancel</button>
+      </div>
+    </div>
+
+    <!-- Share preview modal -->
+    <div id="shareModal" class="modal">
+      <div class="modal-content">
+        <h2>Share Your Progress</h2>
+        <p id="shareText"></p>
+        <button id="confirmShare">Share</button>
+        <button id="cancelShare">Cancel</button>
+      </div>
     </div>
   </div>
   <div id="modal" class="modal">
@@ -425,6 +480,7 @@
     function triggerSpongeAnimation(x, y, onComplete) {
       // Create a container div for the animation
       const sponge = document.createElement('div');
+      sponge.style.pointerEvents = 'none';
       sponge.style.position = 'absolute';
       sponge.style.left = `${x}px`;
       sponge.style.top = `${y}px`;
@@ -515,6 +571,7 @@
     // Spray animation using the Web Animations API and setTimeouts
     function triggerSprayAnimation(x, y, onComplete) {
       const sprayContainer = document.createElement('div');
+      sprayContainer.style.pointerEvents = 'none';
       sprayContainer.style.position = 'absolute';
       sprayContainer.style.left = `${x}px`;
       sprayContainer.style.top = `${y}px`;
@@ -657,6 +714,77 @@
     helpIcon.addEventListener('click', () => {
       modal.style.display = 'flex';
     });
+
+  // Get new elements
+  const resetButton = document.getElementById('resetButton');
+  const shareButton = document.getElementById('shareButton');
+  const resetModal = document.getElementById('resetModal');
+  const shareModal = document.getElementById('shareModal');
+  const confirmReset = document.getElementById('confirmReset');
+  const cancelReset = document.getElementById('cancelReset');
+  const confirmShare = document.getElementById('confirmShare');
+  const cancelShare = document.getElementById('cancelShare');
+  const shareTextEl = document.getElementById('shareText');
+
+  // Show reset modal when button is clicked
+  resetButton.addEventListener('click', () => {
+    resetModal.style.display = 'flex';
+  });
+  cancelReset.addEventListener('click', () => {
+    resetModal.style.display = 'none';
+  });
+  confirmReset.addEventListener('click', () => {
+    // Reset the board: clear cell states and update storage
+    cellChecked = Array(16).fill(false);
+    cells.forEach(cell => cell.classList.remove('checked'));
+    localStorage.setItem('springBingoState', JSON.stringify(cellChecked));
+    updateCenterCompletion();
+    resetModal.style.display = 'none';
+  });
+
+  // Show share modal when button is clicked
+  shareButton.addEventListener('click', () => {
+    const completed = cellChecked.filter(Boolean).length;
+    const link = window.location.href; // link to the card
+    let message = '';
+    if (completed === 0) {
+      message = `Olio’s Big Spring Clean Bingo card is such a fun way to stay motivated while decluttering! 💪🎉\nWhy not join in? Let’s spring clean together: ${link}`;
+    } else if (completed < 16) {
+      message = `I completed ${completed} out of 16 tasks on Olio’s Big Spring Clean Bingo card, and it’s such a fun way to stay motivated while decluttering! 💪🎉\nWhy not join in? Let’s spring clean together: ${link}`;
+    } else {
+      message = `I’ve officially completed all the tasks on Olio’s Big Spring Clean Bingo card! ✅\nFeels so good to declutter, share, and make a difference 💛\nHaven’t joined in yet? It’s not too late – grab your card and get cleaning: ${link}`;
+    }
+    shareTextEl.textContent = message;
+    shareModal.style.display = 'flex';
+  });
+  cancelShare.addEventListener('click', () => {
+    shareModal.style.display = 'none';
+  });
+  confirmShare.addEventListener('click', () => {
+    const shareData = {
+      title: "Spring Clean Bingo",
+      text: shareTextEl.textContent,
+      url: window.location.href,
+    };
+    if (navigator.share) {
+      navigator.share(shareData)
+        .then(() => console.log('Shared successfully'))
+        .catch(err => console.error('Error sharing:', err));
+    } else {
+      // Fallback: copy the share text to the clipboard
+      navigator.clipboard.writeText(shareTextEl.textContent)
+        .then(() => alert('Share text copied to clipboard!'))
+        .catch(err => console.error('Failed to copy:', err));
+    }
+    shareModal.style.display = 'none';
+  });
+
+  // Optional: hide modals when clicking outside the modal content
+  window.addEventListener('click', (e) => {
+    if (e.target === resetModal) resetModal.style.display = 'none';
+    if (e.target === shareModal) shareModal.style.display = 'none';
+  });
+
   </script>
 </body>
 
