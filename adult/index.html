@@ -426,6 +426,94 @@
     window.addEventListener('load', resizeBoard);
     window.addEventListener('resize', resizeBoard);
 
+    // Function to trigger the Sponge animation at a given (x, y) position.
+    function triggerSpongeAnimation(x, y, onComplete) {
+      // Create a container div for the animation
+      const sponge = document.createElement('div');
+      sponge.style.position = 'absolute';
+      sponge.style.left = `${x}px`;
+      sponge.style.top = `${y}px`;
+      sponge.style.zIndex = '10';
+      // Ensure the element is positioned relative to its top-left corner
+      sponge.style.transform = 'translate(-50%, -50%)';
+
+      // Create the image element
+      const img = document.createElement('img');
+      img.src = 'Sponge.png';
+      img.alt = 'Sponge';
+
+      const spongeWidth=Math.min(window.innerWidth, window.innerHeight) * 0.2;
+      img.style.width = spongeWidth + 'px';
+      img.style.maxWidth = 'none';
+      img.style.maxHeight = 'none';
+      // Adjust the internal image offset if needed
+      img.style.transform = 'translate(-30%, -50%)';
+      sponge.appendChild(img);
+      document.body.appendChild(sponge); // Append to body or another container as needed
+
+      // Build the keyframe arrays (similar to your React component)
+      const circlePoints = 8;
+      let xPoints = [150, 0];
+      let yPoints = [150, 0];
+      let opacityPoints = [0, 1];
+      let rotationPoints = [-30, -20];
+
+      // Create the 3 circles of motion
+      for (let circle = 0; circle < 2; circle++) {
+        for (let i = 0; i < circlePoints; i++) {
+          const angle = (i / circlePoints) * 2 * Math.PI;
+          const radius = 30;
+          xPoints.push(Math.cos(angle) * radius);
+          yPoints.push(Math.sin(angle) * radius);
+          opacityPoints.push(1);
+          rotationPoints.push(i % 2 === 0 ? -25 : -15);
+        }
+      }
+
+      // Add the return points
+      xPoints.push(0, 150);
+      yPoints.push(0, 150);
+      opacityPoints.push(1, 0);
+      rotationPoints.push(-20, -30);
+
+      // Generate the timing values for each keyframe (a value between 0 and 1)
+      const times = [];
+      times.push(0, 0.15);
+      const circleMotionDuration = 0.8;
+      const circleStartTime = 0.15;
+      const circleSegments = circlePoints * 2;
+      for (let i = 0; i < circleSegments; i++) {
+        times.push(circleStartTime + (i / circleSegments) * circleMotionDuration);
+      }
+      times.push(0.95, 1.0);
+
+      // Construct keyframes array from the above arrays.
+      const keyframes = [];
+      for (let i = 0; i < xPoints.length; i++) {
+        keyframes.push({
+          offset: times[i],
+          transform: `translate(${xPoints[i]}px, ${yPoints[i]}px) rotate(${rotationPoints[i]}deg)`,
+          opacity: opacityPoints[i]
+        });
+      }
+
+      // Start the animation: duration is 3000ms with a linear easing.
+      const animation = sponge.animate(keyframes, {
+        duration: 2000,
+        easing: 'linear'
+      });
+
+      // Once the animation is finished, remove the element and call the callback.
+      animation.onfinish = () => {
+        console.log('Sponge animation complete');
+        sponge.remove();
+        if (onComplete) onComplete();
+      };
+    }
+
+
+
+
     // Get the canvas and context
     const canvas = document.getElementById('confettiCanvas');
     const ctx = canvas.getContext('2d');
@@ -558,6 +646,15 @@
         // Update the cell's class for visual state
         if (cellChecked[index]) {
           cell.classList.add('checked');
+                  // Get the centre coordinates of the cell.
+          const rect = cell.getBoundingClientRect();
+          const centerX = rect.left + rect.width / 2;
+          const centerY = rect.top + rect.height / 2;
+
+          // Trigger the sponge animation at the cell's centre.
+          triggerSpongeAnimation(centerX, centerY, () => {
+            // Optional: add any code to execute when the animation completes.
+          });
         } else {
           cell.classList.remove('checked');
         }
