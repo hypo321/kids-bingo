@@ -14,10 +14,9 @@
     content="https://olioapp.com/en/wp-content/uploads/sites/1/2023/03/cropped-icon-512-1-270x270.png" />
   <title>Spring Clean Bingo</title>
   <style>
-    /* Reset default margins and ensure border-box sizing for consistent layout */
+    /* Reset and base styles */
     * {
       box-sizing: border-box;
-
     }
 
     @font-face {
@@ -36,7 +35,6 @@
 
     html,
     body {
-
       height: 100%;
       font-family: 'Plus Jakarta Sans', sans-serif;
       padding: 0;
@@ -48,63 +46,43 @@
     .bold-text {
       font-family: 'Cosmica Bold', sans-serif;
     }
+
     html {
-        background: url('spring-clean-background.png') center;
-        background-size:auto;
+      background: url('spring-clean-background.png') center;
+      background-size: auto;
     }
-
-    body {
-
-
-
-      /* constrain content width to 800px */
-
-      /* prevent any scrolling */
-    }
-
-
 
     body {
       --w: calc(2vw);
       --h: calc(2vh);
       font-size: clamp(0.6rem, min(var(--w), var(--h)), 2rem);
-      /* You can adjust this value according to your preference */
-
     }
 
-
-
-    /* Header styling */
+    /* Title banner styling */
     .title {
       grid-area: header;
       display: flex;
-
       justify-content: center;
       align-items: center;
-      /* centre in the grid cell */
       width: 100%;
       height: 100%;
       border: red 1px solid;
       gap: 0.5rem;
       font-size: 4rem;
-      /* center horizontally within body */
     }
 
-
-       @media (orientation: portrait) {
+    @media (orientation: portrait) {
       .title {
         font-size: 3rem;
         flex-direction: column;
         line-height: 3rem;
-
       }
     }
-
-
 
     .title span.purpleText {
       color: #261750;
     }
+
     .title span.pinkText {
       color: #ff4c70;
     }
@@ -114,165 +92,114 @@
       max-width: 400px;
     }
 
-    /* Container for the bingo grid (the "board") */
+    /* Board container styling */
     #boardContainer {
       grid-area: board;
       position: relative;
-      /* 4x4 grid layout */
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       grid-template-rows: repeat(4, 1fr);
       gap: 4px;
-      /* 4px gap between cells (grid lines) */
       width: 80vmin;
       height: 80vmin;
       margin: 0 auto;
-
       --w: calc(calc(100vw / 5) + calc(4 * 4));
       --h: calc(calc(100vh / 5) + calc(4 * 4));
       width: min(var(--w), var(--h));
       height: min(var(--w), var(--h));
-
-
-
-
     }
 
-
-
-    /* Each bingo cell styling */
+    /* Cell styling */
     .cell {
       background: #dedbec;
       position: relative;
-      /* text centred in the cell */
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
-
       font-weight: bold;
       color: #fff;
       text-align: center;
       padding: 1%;
-      /* max width and height
-      max-width: 200px;
-      max-height: 200px;
-      min-width: 110px;
-      min-height: 110px;*/
       --w: calc(100vw / 5.5);
       --h: calc(100vh / 5.5);
       width: min(var(--w), var(--h));
       height: min(var(--w), var(--h));
-
-
-
-      /* The cell will auto size to fill one grid slot. No explicit width/height needed here
-         because the grid defines them. Each cell is initially white. */
-      /* pointer */
       cursor: pointer;
       user-select: none;
       border-radius: 15%;
     }
-
-
-
-
-
-
 
     .pink {
       background: #ff4c70;
       transition: background-color 0.5s ease-in-out;
       border: #ffb000 2px solid;
     }
+
     .orange {
       background: #ffb000;
       transition: background-color 0.5s ease-in-out;
       border: #ff4c70 2px solid;
     }
-    /* Checked state for outer cells */
+
     .checked {
       background: #00bf63;
-      /* green highlight when checked */
-      transition: background-color 0.5s ease-in-out;
+      transition: background-color 1.5s ease-in-out;
     }
 
-
-
-    /* Olio logo at bottom-center */
+    /* Footer and logo styling */
     #logo {
-
-      /* centre in the grid cell */
-
-
       width: clamp(100px, calc(5vw + 10vh), 200px);
       height: auto;
       pointer-events: none;
       margin: auto;
       bottom: 0px;
-
     }
 
-    /* Footer styling */
     #footer {
       grid-area: footer;
       display: flex;
       justify-content: center;
       align-items: center;
-      /* centre in the grid cell */
       width: 100%;
       height: 100%;
       margin: auto;
-
-      /* center horizontally within body */
     }
 
-    /* main column flex 1 column, 3 rows */
+    /* Main grid layout */
     .mainColumn {
-
       display: grid;
       grid-template-areas:
         "header"
         "board"
         "footer";
       grid-template-rows: 10% 1fr auto;
-
       gap: 1rem;
       justify-content: center;
       align-items: center;
-      /* center the title and logo */
       width: 100%;
       height: 100vh;
-      /* enough space for the title and logo top and  bottom, and maximise the middle row for the grid. */
     }
 
     @media (orientation: portrait) {
       .mainColumn {
-
         grid-template-rows: 20% auto auto;
-
-        /* enough space for the title and logo top and  bottom, and maximise the middle row for the grid. */
       }
     }
 
-    /* But in cases where screen is short but wide, I want the frist and third elements to be in a second column to the right of the grid */
     @media (max-height: 850px) and (min-width: 650px) {
       .mainColumn {
         grid-template-columns: 60% 1fr;
-        width:auto;
+        width: auto;
         grid-template-rows: 60% 1fr;
         grid-template-areas:
           "board header"
           "board footer";
         gap: 4rem;
-        /* enough space for the title and logo top and  bottom, and maximise the middle row for the grid. */
       }
-
-
-
     }
 
-    /* Ensure the canvas covers the entire viewport as an overlay */
+    /* Canvas for confetti */
     #confettiCanvas {
       position: fixed;
       top: 0;
@@ -280,15 +207,12 @@
       width: 100%;
       height: 100%;
       pointer-events: none;
-      /* So it doesn't block clicks on your page */
       z-index: 9999;
-      /* High z-index to appear on top */
     }
 
-    /* Modal overlay styling */
+    /* Modal styling */
     .modal {
       display: none;
-      /* hidden by default */
       position: fixed;
       top: 0;
       left: 0;
@@ -326,7 +250,7 @@
       border-radius: 4px;
     }
 
-    /* Help icon (question mark) styling */
+    /* Help icon styling */
     #help-icon {
       position: fixed;
       top: 20px;
@@ -346,87 +270,158 @@
       z-index: 999;
     }
 
-    /* For wide but short screens, rearrange layout */
     @media screen and (min-width: 800px) and (max-height: 600px) {
-
       body {
         font-size: 0.8rem;
       }
-
-
     }
   </style>
 </head>
 
 <body>
   <canvas id="confettiCanvas"></canvas>
-  <!-- Decorative sun in the top-left -->
-
-  <!-- Help icon (question mark) in the top right -->
   <div id="help-icon">?</div>
-
   <div class="mainColumn">
-    <!-- Title banner at the top -->
-      <div class="title">
-        <img src="logo-bingo.png" alt="Spring Clean Bingo"  />
-      </div>
-
-    <!-- Bingo board container (3x3 grid) -->
-
-    <!-- Chick image positioned behind the board -->
-
-    <div id="boardContainer">
-
-      <!-- 9 Bingo cells: 8 clickable outer cells and 1 center star cell -->
-
-<div id="cell0" class="cell pink">Declutter your pantry or cupboards</div>
-<div id="cell1" class="cell orange">List a pantry item on Olio</div>
-<div id="cell2" class="cell pink">Answer a neighbour’s Wanted post on the app</div>
-<div id="cell3" class="cell orange">Share spare kitchen items</div>
-<div id="cell4" class="cell orange">List an item for sale on Olio</div>
-<div id="cell5" class="cell pink">Have a fridge clearout</div>
-<div id="cell6" class="cell orange">"Share a 'before and after' photo of your clear out"</div>
-<div id="cell7" class="cell pink">List a piece of clothing on Olio</div>
-<div id="cell8" class="cell pink">List a book on Olio</div>
-<div id="cell9" class="cell orange">Declutter under your bed</div>
-<div id="cell10" class="cell pink">Organise your wardrobe</div>
-<div id="cell11" class="cell orange">Sort out your cleaning supplies</div>
-<div id="cell12" class="cell orange">Tackle 'THAT' drawer</div>
-<div id="cell13" class="cell pink">Unlock the 'Spring Cleaner' badge</div>
-<div id="cell14" class="cell orange">List unused and unwanted toiletries</div>
-<div id="cell15" class="cell pink">Organise your storage boxes</div>
+    <div class="title">
+      <img src="logo-bingo.png" alt="Spring Clean Bingo" />
     </div>
-
-
-    <!-- Olio logo at the bottom -->
+    <div id="boardContainer">
+      <div id="cell0" class="cell pink">Declutter your pantry or cupboards</div>
+      <div id="cell1" class="cell orange">List a pantry item on Olio</div>
+      <div id="cell2" class="cell pink">Answer a neighbour’s Wanted post on the app</div>
+      <div id="cell3" class="cell orange">Share spare kitchen items</div>
+      <div id="cell4" class="cell orange">List an item for sale on Olio</div>
+      <div id="cell5" class="cell pink">Have a fridge clearout</div>
+      <div id="cell6" class="cell orange">"Share a 'before and after' photo of your clear out"</div>
+      <div id="cell7" class="cell pink">List a piece of clothing on Olio</div>
+      <div id="cell8" class="cell pink">List a book on Olio</div>
+      <div id="cell9" class="cell orange">Declutter under your bed</div>
+      <div id="cell10" class="cell pink">Organise your wardrobe</div>
+      <div id="cell11" class="cell orange">Sort out your cleaning supplies</div>
+      <div id="cell12" class="cell orange">Tackle 'THAT' drawer</div>
+      <div id="cell13" class="cell pink">Unlock the 'Spring Cleaner' badge</div>
+      <div id="cell14" class="cell orange">List unused and unwanted toiletries</div>
+      <div id="cell15" class="cell pink">Organise your storage boxes</div>
+    </div>
     <div id="footer">
       <img src="olio_purple.png" id="logo" alt="Olio Logo" />
     </div>
   </div>
-  <!-- Modal for instructions -->
   <div id="modal" class="modal">
     <div class="modal-content">
       <h2>🌟 Instructions 🌟</h2>
-      <p>This Bingo card is a fun and interactive way for you to help out at home during spring cleaning time. Each
-        square
-        has a simple task you can do to lend a hand and make spring cleaning a family effort.</p>
+      <p>
+        This Bingo card is a fun and interactive way for you to help out at home during spring cleaning time. Each
+        square has a simple task you can do to lend a hand and make spring cleaning a family effort.
+      </p>
       <p><strong>✅ How to play:</strong></p>
       <ul style="list-style: none; padding: 0;">
         <li>• Tap or click a square when you’ve finished the task to tick it off</li>
         <li>• Try to complete as many as you can – one tick at a time!</li>
         <li>• Made a mistake? Press on the square again to undo it</li>
       </ul>
-      <p>So roll up your sleeves, grab a grown-up if you need help, and let’s get spring cleaning! 💪🏼🧽</p>
+      <p>
+        So roll up your sleeves, grab a grown-up if you need help, and let’s get spring cleaning! 💪🏼🧽
+      </p>
       <p>Good luck and have fun! 🌼</p>
       <button id="modal-ok">OK</button>
     </div>
   </div>
   <script>
-    // Adjust on load and on window resize
-    window.addEventListener('load', resizeBoard);
-    window.addEventListener('resize', resizeBoard);
+    // Adjust canvas size for confetti
+    const canvas = document.getElementById('confettiCanvas');
+    const ctx = canvas.getContext('2d');
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
 
-    // Function to trigger the Sponge animation at a given (x, y) position.
+    // Confetti animation functions
+    const confettiCount = 150;
+    let confetti = [];
+    const colours = ['#FFC107', '#E91E63', '#9C27B0', '#03A9F4', '#4CAF50'];
+    function initConfetti() {
+      confetti = [];
+      for (let i = 0; i < confettiCount; i++) {
+        confetti.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height - canvas.height,
+          r: Math.random() * 6 + 2,
+          d: Math.random() * confettiCount,
+          colour: colours[Math.floor(Math.random() * colours.length)],
+          tilt: Math.floor(Math.random() * 10) - 10,
+          tiltAngleIncremental: Math.random() * 0.07 + 0.05,
+          tiltAngle: 0
+        });
+      }
+    }
+    function drawConfetti() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < confettiCount; i++) {
+        const p = confetti[i];
+        ctx.beginPath();
+        ctx.lineWidth = p.r;
+        ctx.strokeStyle = p.colour;
+        ctx.moveTo(p.x + p.tilt + p.r / 2, p.y);
+        ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r / 2);
+        ctx.stroke();
+      }
+      updateConfetti();
+    }
+    let angle = 0;
+    function updateConfetti() {
+      angle += 0.01;
+      for (let i = 0; i < confettiCount; i++) {
+        const p = confetti[i];
+        p.tiltAngle += p.tiltAngleIncremental;
+        p.y += (Math.cos(angle + p.d) + 3 + p.r / 2) / 2;
+        p.x += Math.sin(angle);
+        p.tilt = Math.sin(p.tiltAngle) * 15;
+        if (p.y > canvas.height) {
+          p.y = -10;
+          p.x = Math.random() * canvas.width;
+        }
+      }
+    }
+    let animationFrameId = null;
+    function animateConfetti() {
+      drawConfetti();
+      animationFrameId = requestAnimationFrame(animateConfetti);
+    }
+    function startConfetti() {
+      if (!animationFrameId) {
+        initConfetti();
+        animateConfetti();
+      }
+    }
+    function stopConfetti() {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+    }
+    initConfetti();
+
+    // Retrieve saved cell state and set up the board
+    let savedState = localStorage.getItem('springBingoState');
+    let cellChecked = savedState ? JSON.parse(savedState) : Array(16).fill(false);
+    const cells = Array.from({ length: 16 }, (_, i) => document.getElementById('cell' + i));
+    const centerCell = document.getElementById('cell4');
+    function updateCenterCompletion() {
+      const allChecked = cellChecked.every((checked) => checked);
+      if (allChecked) {
+        centerCell.classList.add('complete');
+        startConfetti();
+      } else {
+        centerCell.classList.remove('complete');
+        stopConfetti();
+      }
+    }
+
+   // Function to trigger the Sponge animation at a given (x, y) position.
     function triggerSpongeAnimation(x, y, onComplete) {
       // Create a container div for the animation
       const sponge = document.createElement('div');
@@ -442,8 +437,14 @@
       img.src = 'Sponge.png';
       img.alt = 'Sponge';
 
-      const spongeWidth=Math.min(window.innerWidth, window.innerHeight) * 0.2;
-      img.style.width = spongeWidth + 'px';
+      // variable to hold the shortest viewport length
+      const viewportLength = Math.min(window.innerWidth, window.innerHeight);
+      const spongeWidth=  viewportLength * 0.4; // 20% of the shortest viewport length
+
+      // Use a large width (as in your React component)
+
+
+      img.style.width = `${spongeWidth}px`;
       img.style.maxWidth = 'none';
       img.style.maxHeight = 'none';
       // Adjust the internal image offset if needed
@@ -511,207 +512,152 @@
       };
     }
 
+    // Spray animation using the Web Animations API and setTimeouts
+    function triggerSprayAnimation(x, y, onComplete) {
+      const sprayContainer = document.createElement('div');
+      sprayContainer.style.position = 'absolute';
+      sprayContainer.style.left = `${x}px`;
+      sprayContainer.style.top = `${y}px`;
+      sprayContainer.style.zIndex = '10';
+      // Create the spray image element
+      const viewportLength = Math.min(window.innerWidth, window.innerHeight);
+      const sprayWidth = viewportLength * 0.6; // 20% of the shortest viewport length
 
-
-
-    // Get the canvas and context
-    const canvas = document.getElementById('confettiCanvas');
-    const ctx = canvas.getContext('2d');
-
-    // Resize the canvas to cover the full viewport
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    // Confetti properties
-    const confettiCount = 150;
-    let confetti = [];
-    const colours = ['#FFC107', '#E91E63', '#9C27B0', '#03A9F4', '#4CAF50'];
-
-    // Initialise confetti particles
-    function initConfetti() {
-      confetti = []; // Reset the array
-      for (let i = 0; i < confettiCount; i++) {
-        confetti.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height - canvas.height,
-          r: Math.random() * 6 + 2, // Size of the confetti
-          d: Math.random() * confettiCount, // Density for movement variance
-          colour: colours[Math.floor(Math.random() * colours.length)],
-          tilt: Math.floor(Math.random() * 10) - 10,
-          tiltAngleIncremental: (Math.random() * 0.07) + 0.05,
-          tiltAngle: 0
-        });
-      }
-    }
-
-    // Draw confetti on the canvas
-    function drawConfetti() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      for (let i = 0; i < confettiCount; i++) {
-        const p = confetti[i];
-        ctx.beginPath();
-        ctx.lineWidth = p.r;
-        ctx.strokeStyle = p.colour;
-        ctx.moveTo(p.x + p.tilt + (p.r / 2), p.y);
-        ctx.lineTo(p.x + p.tilt, p.y + p.tilt + (p.r / 2));
-        ctx.stroke();
-      }
-      updateConfetti();
-    }
-
-    // Update confetti positions for the animation
-    let angle = 0;
-    function updateConfetti() {
-      angle += 0.01;
-      for (let i = 0; i < confettiCount; i++) {
-        const p = confetti[i];
-        p.tiltAngle += p.tiltAngleIncremental;
-        p.y += (Math.cos(angle + p.d) + 3 + p.r / 2) / 2;
-        p.x += Math.sin(angle);
-        p.tilt = Math.sin(p.tiltAngle) * 15;
-
-        // If the confetti goes off-screen, reset its position
-        if (p.y > canvas.height) {
-          p.y = -10;
-          p.x = Math.random() * canvas.width;
+      const sprayImage = document.createElement('img');
+      function getSprayImage(phase) {
+        switch (phase) {
+          case 1:
+            return 'spray01.png';
+          case 2:
+            return 'spray02.png';
+          case 3:
+            return 'spray03.png';
+          default:
+            return 'spray01.png';
         }
       }
+      let currentPhase = 1;
+      sprayImage.src = getSprayImage(currentPhase);
+      sprayImage.alt = 'Spray';
+      sprayImage.style.width = `${sprayWidth}px`;
+      const leftDistance= 0.2 * sprayWidth; // 60% of the spray width
+      const topDistance =0; // 50% of the spray width
+
+      //sprayImage.style.marginLeft = '-' + sprayWidth + 'px';
+      //sprayImage.style.marginTop = '-' + topDistance + 'px';
+
+      sprayImage.style.marginLeft = '-80%';
+      sprayImage.style.marginTop = '-15%';
+      sprayContainer.appendChild(sprayImage);
+      // Set initial (hidden) style: { x: -750, y: 150, opacity: 0 }
+      sprayContainer.style.transform = 'translate(-750px, 150px)';
+      sprayContainer.style.opacity = '0';
+      document.body.appendChild(sprayContainer);
+      // Animate entrance to visible: { x: -350, y: -50, opacity: 1 }
+      sprayContainer.animate(
+        [
+          { transform: 'translate(-750px, 150px)', opacity: 0 },
+          { transform: 'translate(0px, 0px)', opacity: 1 }
+        ],
+        {
+          duration: 200,
+          easing: 'ease-out',
+          fill: 'forwards'
+        }
+      );
+      // Define the spray sequence timings
+      const ANIMATION_SEQUENCE = [
+        { phase: 1, duration: 200 },
+        { phase: 2, duration: 500 },
+        { phase: 3, duration: 200 },
+        { phase: 2, duration: 200 },
+        { phase: 1, duration: 200 },
+        { phase: 2, duration: 500 },
+        { phase: 3, duration: 200 },
+        { phase: 2, duration: 200 },
+        { phase: 1, duration: 200 }
+      ];
+      let cumulativeDelay = 0;
+      ANIMATION_SEQUENCE.forEach(({ phase, duration }) => {
+        setTimeout(() => {
+          currentPhase = phase;
+          sprayImage.src = getSprayImage(currentPhase);
+        }, cumulativeDelay);
+        cumulativeDelay += duration;
+      });
+      // After the sequence, animate exit back to hidden state.
+      setTimeout(() => {
+        const exitAnimation = sprayContainer.animate(
+          [
+            { transform: 'translate(0px, 0px)', opacity: 1 },
+            { transform: 'translate(-750px, 150px)', opacity: 0 }
+          ],
+          {
+            duration: 250,
+            easing: 'ease-out',
+            fill: 'forwards'
+          }
+        );
+        exitAnimation.onfinish = () => {
+          console.log('Spray animation complete');
+          sprayContainer.remove();
+          if (onComplete) onComplete();
+        };
+      }, cumulativeDelay);
     }
 
-    // Variable to hold the animation frame id
-    let animationFrameId = null;
-
-    // Animation loop function
-    function animateConfetti() {
-      drawConfetti();
-      animationFrameId = requestAnimationFrame(animateConfetti);
-    }
-
-    // Function to start the confetti animation
-    function startConfetti() {
-      if (!animationFrameId) { // Only start if it's not already running
-        initConfetti();
-        animateConfetti();
-      }
-    }
-
-    // Function to stop the confetti animation
-    function stopConfetti() {
-      if (animationFrameId) {
-        cancelAnimationFrame(animationFrameId);
-        animationFrameId = null;
-        // Optionally clear the canvas once stopped:
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-      }
-    }
-
-    initConfetti(); // Initialise confetti on load
-
-
-
-    // JavaScript for interactive functionality and responsiveness
-
-    // Retrieve saved state from localStorage (if any)
-    let savedState = localStorage.getItem('springBingoState');
-    let cellChecked = savedState ? JSON.parse(savedState) : Array(16).fill(false);
-    // cellChecked is an array of 9 booleans representing each cell (index 4 is center, always false in this context)
-
-    // Get references to the DOM elements for cells and center star
-    const cells = Array.from({ length: 16 }, (_, i) => document.getElementById('cell' + i));
-    const centerCell = document.getElementById('cell4');
-
-    // Function to update the center star based on outer cells
-    function updateCenterCompletion() {
-      const allChecked = cellChecked.every((checked, index) => checked);
-      if (allChecked) {
-        centerCell.classList.add('complete');
-        startConfetti();
-      } else {
-        centerCell.classList.remove('complete');
-        stopConfetti();
-      }
-    }
-
-    // Add event listeners to outer cells for click toggling
+    // Add click event listeners to cells and integrate both animations.
     cells.forEach((cell, index) => {
-
       cell.addEventListener('click', () => {
-        // Toggle state
         const currentlyChecked = cellChecked[index];
         cellChecked[index] = !currentlyChecked;
-        // Update the cell's class for visual state
         if (cellChecked[index]) {
-          cell.classList.add('checked');
-                  // Get the centre coordinates of the cell.
+
           const rect = cell.getBoundingClientRect();
           const centerX = rect.left + rect.width / 2;
           const centerY = rect.top + rect.height / 2;
-
-          // Trigger the sponge animation at the cell's centre.
-          triggerSpongeAnimation(centerX, centerY, () => {
-            // Optional: add any code to execute when the animation completes.
+          // Trigger the spray animation first, then the sponge animation on its completion.
+          triggerSprayAnimation(centerX, centerY, () => {
+                      cell.classList.add('checked');
+            triggerSpongeAnimation(centerX, centerY, () => {
+              // Optional: additional code after sponge animation completes.
+            });
           });
         } else {
           cell.classList.remove('checked');
         }
-        // Save updated state to localStorage
         localStorage.setItem('springBingoState', JSON.stringify(cellChecked));
-        // Check if all outer cells are checked and update center accordingly
         updateCenterCompletion();
       });
     });
-
-    // On page load, apply any saved checked classes and update center
     cells.forEach((cell, index) => {
-      if ( cellChecked[index]) {
+      if (cellChecked[index]) {
         cell.classList.add('checked');
       }
     });
-    updateCenterCompletion();  // set center state based on initial data
+    updateCenterCompletion();
 
-    // Responsive resize: adjust board size to fit in viewport without overflow
-    function resizeBoard() {
-
-    }
-
-    /* Modal functionality */
+    // Modal functionality
     const modal = document.getElementById('modal');
     const modalOk = document.getElementById('modal-ok');
     const helpIcon = document.getElementById('help-icon');
-
-
-    // Show the modal if not already shown in a previous visit
     if (!localStorage.getItem('instructionsShown')) {
       modal.style.display = 'flex';
     }
-
-    // Hide modal function
     function hideModal() {
       modal.style.display = 'none';
       localStorage.setItem('instructionsShown', 'true');
     }
-
     modalOk.addEventListener('click', hideModal);
-
-    // Hide modal if clicking outside the modal content
     modal.addEventListener('click', (e) => {
       if (e.target === modal) {
         hideModal();
       }
     });
-
-    // Reopen modal when clicking the help icon
     helpIcon.addEventListener('click', () => {
       modal.style.display = 'flex';
     });
-
   </script>
-
-
 </body>
 
 </html>
