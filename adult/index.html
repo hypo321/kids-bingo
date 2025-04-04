@@ -410,6 +410,18 @@
 
       </div>
     </div>
+
+    <!-- Share preview modal -->
+    <div id="shareCongratsModal" class="modal">
+      <div class="modal-content">
+        <h2>Congratulations! 🎉</h2>
+        <p id="shareCongrats"></p>
+        <button id="cancelShareCongrats">Cancel</button>
+        <button id="confirmShareCongrats">Share</button>
+
+      </div>
+    </div>
+
   </div>
   <div id="modal" class="modal">
     <div class="modal-content">
@@ -447,6 +459,8 @@
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
+    const sprayAudio = new Audio('spray.m4a');
+     const spongeAudio = new Audio('wipe.m4a');
     // Confetti animation functions
     const confettiCount = 150;
     let confetti = [];
@@ -524,8 +538,7 @@
       if (allChecked) {
         setTimeout(() => {
           startConfetti();
-            const shareButton = document.getElementById('shareButton');
-            shareButton.click();
+          triggerCongratsModal();
         }, 3000);
 
       } else {
@@ -618,7 +631,11 @@
         duration: 2000,
         easing: 'linear'
       });
-
+      // play the spray audio after 500ms delay
+      setTimeout(() => {
+        spongeAudio.currentTime = 0;
+        spongeAudio.play();
+      }, 0);
       // Once the animation is finished, remove the element and call the callback.
       animation.onfinish = () => {
         console.log('Sponge animation complete');
@@ -629,6 +646,8 @@
 
     // Spray animation using the Web Animations API and setTimeouts
     function triggerSprayAnimation(x, y, onComplete) {
+
+
       const sprayContainer = document.createElement('div');
       sprayContainer.style.pointerEvents = 'none';
       sprayContainer.style.position = 'absolute';
@@ -695,6 +714,11 @@
         { phase: 1, duration: 200 }
       ];
       let cumulativeDelay = 0;
+      // play the spray audio after 500ms delay
+      setTimeout(() => {
+        sprayAudio.currentTime = 0;
+        sprayAudio.play();
+      }, 500);
       ANIMATION_SEQUENCE.forEach(({ phase, duration }) => {
         setTimeout(() => {
           currentPhase = phase;
@@ -702,6 +726,7 @@
         }, cumulativeDelay);
         cumulativeDelay += duration;
       });
+
       // After the sequence, animate exit back to hidden state.
       setTimeout(() => {
         const exitAnimation = sprayContainer.animate(
@@ -715,6 +740,7 @@
             fill: 'forwards'
           }
         );
+
         exitAnimation.onfinish = () => {
           console.log('Spray animation complete');
           sprayContainer.remove();
@@ -794,11 +820,15 @@
   const shareButton = document.getElementById('shareButton');
   const resetModal = document.getElementById('resetModal');
   const shareModal = document.getElementById('shareModal');
+  const shareCongratsModal = document.getElementById('shareCongratsModal');
   const confirmReset = document.getElementById('confirmReset');
   const cancelReset = document.getElementById('cancelReset');
   const confirmShare = document.getElementById('confirmShare');
   const cancelShare = document.getElementById('cancelShare');
+  const confirmShareCongrats = document.getElementById('confirmShareCongrats');
+  const cancelShareCongrats = document.getElementById('cancelShareCongrats');
   const shareTextEl = document.getElementById('shareText');
+  const shareCongratsEl = document.getElementById('shareCongrats');
 
   // Show reset modal when button is clicked
   resetButton.addEventListener('click', () => {
@@ -858,10 +888,54 @@
     shareModal.style.display = 'none';
   });
 
+    // Show share modal when button is clicked
+    function triggerCongratsModal() {
+      const completed = cellChecked.filter(Boolean).length;
+      const link = window.location.href; // link to the card
+      let message = '';
+      if (completed === 0) {
+        message = `Olio’s Big Spring Clean Bingo card is such a fun way to stay motivated while decluttering! 💪🎉\n\nWhy not join in? Let’s spring clean together!\n\n${link}`;
+      } else if (completed < 16) {
+        message = `I've completed ${completed} out of 16 tasks on Olio’s Big Spring Clean Bingo card.\n\nIt’s such a fun way to stay motivated while decluttering! 💪🎉\n\nWhy not join in? Let’s spring clean together!\n\n${link}`;
+      } else {
+        message = `I’ve officially completed all the tasks on Olio’s Big Spring Clean Bingo card! ✅\n\nFeels so good to declutter, share, and make a difference 💛\n\nHaven’t joined in yet? It’s not too late – grab your card and get cleaning!\n\n${link}`;
+      }
+
+      shareCongratsEl.textContent = message; //'<p>'+message.split('\n').join('</p><p>')+'</p>'; // Split the message into paragraphs
+      shareCongratsEl.style.whiteSpace = 'pre-line';
+      shareCongratsEl.style.textWrap = 'balance';
+      shareCongratsEl.style.padding = '1.5rem';
+      shareCongratsModal.style.display = 'flex';
+
+    }
+    cancelShareCongrats.addEventListener('click', () => {
+      shareCongratsModal.style.display = 'none';
+    });
+    confirmShareCongrats.addEventListener('click', () => {
+      const shareData = {
+        title: "Spring Clean Bingo",
+        text: shareCongratsEl.textContent,
+        url: window.location.href,
+      };
+      if (navigator.share) {
+        navigator.share(shareData)
+          .then(() => console.log('Shared successfully'))
+          .catch(err => console.error('Error sharing:', err));
+      } else {
+        // Fallback: copy the share text to the clipboard
+        navigator.clipboard.writeText(shareCongratsEl.textContent)
+          .then(() => alert('Share text copied to clipboard!'))
+          .catch(err => console.error('Failed to copy:', err));
+      }
+      shareCongratsModal.style.display = 'none';
+    });
+
+
   // Optional: hide modals when clicking outside the modal content
   window.addEventListener('click', (e) => {
     if (e.target === resetModal) resetModal.style.display = 'none';
     if (e.target === shareModal) shareModal.style.display = 'none';
+    if (e.target === shareCongratsModal) shareCongratsModal.style.display = 'none';
   });
 
   </script>
