@@ -274,12 +274,20 @@
       text-wrap: balanced;
     }
 
-    .modal-content h2 {
-      margin-top: 0;
+    #confirmShare {
+      background: #00bf63;
+      color: #fff;
+      font-size: 1rem;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
     }
 
+
+
     .modal-content button {
-      margin-top: 15px;
+      margin: 15px 10px;
       padding: 10px 20px;
       font-size: 1rem;
       cursor: pointer;
@@ -387,7 +395,7 @@
       <div class="modal-content">
         <h2>Confirm Reset</h2>
         <p>Are you sure you want to reset the board?</p>
-        <button id="confirmReset">Yes, Reset</button>
+        <button id="confirmReset">Reset</button>
         <button id="cancelReset">Cancel</button>
       </div>
     </div>
@@ -397,8 +405,9 @@
       <div class="modal-content">
         <h2>Share Your Progress</h2>
         <p id="shareText"></p>
-        <button id="confirmShare">Share</button>
         <button id="cancelShare">Cancel</button>
+        <button id="confirmShare">Share</button>
+
       </div>
     </div>
   </div>
@@ -805,14 +814,19 @@
     const link = window.location.href; // link to the card
     let message = '';
     if (completed === 0) {
-      message = `Olio’s Big Spring Clean Bingo card is such a fun way to stay motivated while decluttering! 💪🎉\nWhy not join in? Let’s spring clean together!`;
+      message = `Olio’s Big Spring Clean Bingo card is such a fun way to stay motivated while decluttering! 💪🎉\n\nWhy not join in? Let’s spring clean together!\n\n${link}`;
     } else if (completed < 16) {
-      message = `I've completed ${completed} out of 16 tasks on Olio’s Big Spring Clean Bingo card, and it’s such a fun way to stay motivated while decluttering! 💪🎉\nWhy not join in? Let’s spring clean together!`;
+      message = `I've completed ${completed} out of 16 tasks on Olio’s Big Spring Clean Bingo card.\n\nIt’s such a fun way to stay motivated while decluttering! 💪🎉\n\nWhy not join in? Let’s spring clean together!\n\n${link}`;
     } else {
-      message = `I’ve officially completed all the tasks on Olio’s Big Spring Clean Bingo card! ✅\nFeels so good to declutter, share, and make a difference 💛\nHaven’t joined in yet? It’s not too late – grab your card and get cleaning!`;
+      message = `I’ve officially completed all the tasks on Olio’s Big Spring Clean Bingo card! ✅\n\nFeels so good to declutter, share, and make a difference 💛\n\nHaven’t joined in yet? It’s not too late – grab your card and get cleaning!\n\n${link}`;
     }
-    shareTextEl.textContent = message;
+
+    shareTextEl.textContent = message; //'<p>'+message.split('\n').join('</p><p>')+'</p>'; // Split the message into paragraphs
+    shareTextEl.style.whiteSpace = 'pre-line';
+    shareTextEl.style.textWrap = 'balance';
+    shareTextEl.style.padding = '1.5rem';
     shareModal.style.display = 'flex';
+
   });
   cancelShare.addEventListener('click', () => {
     shareModal.style.display = 'none';
