@@ -628,7 +628,6 @@
 
       // Once the animation is finished, remove the element and call the callback.
       animation.onfinish = () => {
-        console.log('Sponge animation complete');
         sponge.remove();
         if (onComplete) onComplete();
       };
@@ -728,7 +727,7 @@
         );
 
         exitAnimation.onfinish = () => {
-          console.log('Spray animation complete');
+
           sprayContainer.remove();
           if (onComplete) onComplete();
         };
@@ -862,12 +861,12 @@
     if (navigator.share) {
       navigator.share(shareData)
         .then(() => console.log('Shared successfully'))
-        .catch(err => console.error('Error sharing:', err));
+        .catch(err => console.log('Error sharing:', err));
     } else {
       // Fallback: copy the share text to the clipboard
       navigator.clipboard.writeText(shareTextEl.textContent)
         .then(() => alert('Share text copied to clipboard!'))
-        .catch(err => console.error('Failed to copy:', err));
+        .catch(err => console.log('Failed to copy:', err));
     }
     shareModal.style.display = 'none';
   });
@@ -904,12 +903,12 @@
       if (navigator.share) {
         navigator.share(shareData)
           .then(() => console.log('Shared successfully'))
-          .catch(err => console.error('Error sharing:', err));
+          .catch(err => console.log('Error sharing:', err));
       } else {
         // Fallback: copy the share text to the clipboard
         navigator.clipboard.writeText(shareCongratsEl.textContent)
           .then(() => alert('Share text copied to clipboard!'))
-          .catch(err => console.error('Failed to copy:', err));
+          .catch(err => console.log('Failed to copy:', err));
       }
       shareCongratsModal.style.display = 'none';
     });
